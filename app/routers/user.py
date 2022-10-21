@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status
-from app.schemas import User, UserId, ShowUser, UpdateUser
+from app.schemas import User, ShowUser, UpdateUser
 from app.db.database import get_db
 from sqlalchemy.orm import Session
 from typing import List #para lista
@@ -11,7 +11,6 @@ router = APIRouter(
     tags=["Users"]
 )
 
-usuarios = []
 
 @router.get('/', response_model=List[ShowUser], status_code=status.HTTP_200_OK)
 def obtener_usuarios(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
@@ -19,7 +18,7 @@ def obtener_usuarios(db: Session = Depends(get_db), current_user: User = Depends
     return data
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-def crear_usuario(usuario: User, db: Session = Depends(get_db)):
+def crear_usuario(usuario: User, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     user.crear_usuario(usuario, db)
     return {"Response": "Usuario creado satisfactoriamente!"}
 
