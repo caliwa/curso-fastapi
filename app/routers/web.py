@@ -2,7 +2,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Request, APIRouter
 import aiohttp
 
-router = APIRouter()
+router = APIRouter(include_in_schema=False)
 templates = Jinja2Templates(directory="app/templates")
 
 url = "http://localhost:8000"
